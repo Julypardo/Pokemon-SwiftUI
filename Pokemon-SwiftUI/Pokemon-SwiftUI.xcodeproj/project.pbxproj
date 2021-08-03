@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB30A2AB26B99FD200D65689 /* ListPokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB30A2AA26B99FD200D65689 /* ListPokemon.swift */; };
 		AB3B47C226B8CEC900763DDC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3B47C126B8CEC900763DDC /* AppDelegate.swift */; };
 		AB3B47C426B8CEC900763DDC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3B47C326B8CEC900763DDC /* SceneDelegate.swift */; };
 		AB3B47C626B8CEC900763DDC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3B47C526B8CEC900763DDC /* ContentView.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB30A2AA26B99FD200D65689 /* ListPokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPokemon.swift; sourceTree = "<group>"; };
 		AB3B47BE26B8CEC900763DDC /* Pokemon-SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pokemon-SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB3B47C126B8CEC900763DDC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB3B47C326B8CEC900763DDC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				AB3B47C326B8CEC900763DDC /* SceneDelegate.swift */,
 				AB3B47C526B8CEC900763DDC /* ContentView.swift */,
 				AB3B47D726B8D04B00763DDC /* CardPokemon.swift */,
+				AB30A2AA26B99FD200D65689 /* ListPokemon.swift */,
 				AB3B47D926B8D09C00763DDC /* Assets.xcassets */,
 				AB3B47CC26B8CECD00763DDC /* LaunchScreen.storyboard */,
 				AB3B47CF26B8CECD00763DDC /* Info.plist */,
@@ -151,6 +154,7 @@
 				AB3B47C226B8CEC900763DDC /* AppDelegate.swift in Sources */,
 				AB3B47C426B8CEC900763DDC /* SceneDelegate.swift in Sources */,
 				AB3B47C626B8CEC900763DDC /* ContentView.swift in Sources */,
+				AB30A2AB26B99FD200D65689 /* ListPokemon.swift in Sources */,
 				AB3B47D826B8D04B00763DDC /* CardPokemon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

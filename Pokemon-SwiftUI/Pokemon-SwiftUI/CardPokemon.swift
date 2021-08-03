@@ -47,11 +47,14 @@ struct InfoCard: View {
                     
                     VStack(alignment: .leading){
                         Text("Name")
+                            .font(.custom("Gilroy-Bold", size: 30))
+                        
                         HStack(spacing: 0) {
                             Text("Types")
                             Spacer()
                             Text("0033")
                         }
+                        .font(.custom("Gilroy-Bold", size: 18))
                         .padding(.trailing, 10)
                         .padding(.top, 10)
                     }
@@ -88,6 +91,8 @@ struct InfoCard: View {
                 
                 VStack(alignment: .leading){
                     Text("About")
+                        .font(.custom("Gilroy-Bold", size: 25))
+                    
                     Divider()
                         .frame(width: 285, height: 2)
                         .background(Color("1791E7"))
@@ -112,9 +117,11 @@ struct InfoCard: View {
                         .padding(.leading, 30)
                     }
                     .padding(.top, 20)
+                    .font(.custom("Gilroy-Bold", size: 18))
                     
                     Spacer()
                 }
+                .foregroundColor(Color("707070"))
                 .padding(.leading, 20)
                 .padding(.top, 10)
                 .padding(.bottom)
