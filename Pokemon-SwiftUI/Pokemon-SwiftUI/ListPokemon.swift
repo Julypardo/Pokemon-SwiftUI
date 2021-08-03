@@ -10,6 +10,9 @@ import SwiftUI
 struct ListPokemon: View {
     var body: some View {
         ZStack {
+            Color(#colorLiteral(red: 0.9725490196, green: 0.9803921569, blue: 0.9843137255, alpha: 1))
+                .edgesIgnoringSafeArea(.all)
+            
             VStack {
                 HStack {
                     Spacer()
@@ -42,7 +45,7 @@ struct ListPokemon: View {
                 }
                 .padding(.top, 20)
             }
-            .padding(.horizontal, 15)
+            .padding(.horizontal, 30)
         }
         .foregroundColor(Color("707070"))
         
