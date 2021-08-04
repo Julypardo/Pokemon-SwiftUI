@@ -10,7 +10,7 @@ import SwiftUI
 struct ListPokemon: View {
     var body: some View {
         ZStack {
-            Color(#colorLiteral(red: 0.9725490196, green: 0.9803921569, blue: 0.9843137255, alpha: 1))
+            Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
@@ -36,10 +36,12 @@ struct ListPokemon: View {
                 .foregroundColor(Color("707070"))
                 
                 Text("Pokedex")
-                    .font(.custom("Gilroy-Bold", size: 30))
+                    .font(.title)
+                    .foregroundColor(Color("707070"))
+                    .fontWeight(.bold)
                     .padding(.top, 40)
                 
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     List()
                         .padding(.bottom, 50)
                 }
@@ -60,7 +62,6 @@ struct ListPokemon_Previews: PreviewProvider {
 
 struct item: Identifiable {
     var id = UUID()
-    var color: String
     var name: String
     var types: String
     var imagePokemon: String
@@ -69,27 +70,31 @@ struct item: Identifiable {
 struct List: View {
     
     let data: [item] = [
-        item(color: "FCD7FB", name: "Name", types: "Types", imagePokemon: "pokemon4"),
-        item(color: "FFE0AD", name: "Name", types: "Types", imagePokemon: "pokemon3"),
-        item(color: "F5EC77", name: "Name", types: "Types", imagePokemon: "pokemon2"),
-        item(color: "C1F1FF", name: "Name", types: "Types", imagePokemon: "pokemon1"),
+        item(name: "Name", types: "Types", imagePokemon: "pokemon4"),
+        item(name: "Name", types: "Types", imagePokemon: "pokemon3"),
+        item( name: "Name", types: "Types", imagePokemon: "pokemon2"),
+        item( name: "Name", types: "Types", imagePokemon: "pokemon1"),
     ]
     
     var body: some View {
         ForEach (data) { item in
             
-            VStack(spacing: 30) {
+            VStack(spacing: 0) {
                 ZStack {
-                    LinearGradient(gradient: Gradient(colors: [Color.white, Color(item.color)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    LinearGradient(gradient: Gradient(colors: [Color.white, Color("C1F1FF")]), startPoint: .topLeading, endPoint: .bottomTrailing)
                         .edgesIgnoringSafeArea(.all)
                     
                     HStack {
                         
                         VStack(alignment: .leading, spacing: 10){
                             Text(item.name)
-                                .font(.custom("Gilroy-Bold", size: 30))
+                                .font(.title)
+                                .foregroundColor(Color("707070"))
+                                .fontWeight(.bold)
                             Text(item.types)
-                                .font(.custom("Gilroy-Bold", size: 18))
+                                .font(.body)
+                                .foregroundColor(Color("707070"))
+                                .fontWeight(.bold)
                         }
                         Spacer()
                         
@@ -99,12 +104,12 @@ struct List: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 133, height: 133)
                     }
-                    .padding(15)
+                    .padding(.horizontal, 10)
                 }
                 .cornerRadius(20)
                 .frame(height: 150)
-                .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1219618842)), radius: 5)
-                .padding(.top, 30)
+                .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.07)), radius: 5)
+                .padding(5)
             }
         }
     }
