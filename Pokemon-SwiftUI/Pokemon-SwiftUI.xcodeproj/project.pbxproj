@@ -15,7 +15,7 @@
 		AB3B47CB26B8CECD00763DDC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB3B47CA26B8CECD00763DDC /* Preview Assets.xcassets */; };
 		AB3B47CE26B8CECD00763DDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB3B47CC26B8CECD00763DDC /* LaunchScreen.storyboard */; };
 		AB3B47D826B8D04B00763DDC /* CardPokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3B47D726B8D04B00763DDC /* CardPokemon.swift */; };
-		AB3B47DA26B8D09C00763DDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB3B47D926B8D09C00763DDC /* Assets.xcassets */; };
+		AB9CB29726BB2205001467F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB9CB29626BB2205001467F7 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +29,7 @@
 		AB3B47CD26B8CECD00763DDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB3B47CF26B8CECD00763DDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB3B47D726B8D04B00763DDC /* CardPokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPokemon.swift; sourceTree = "<group>"; };
-		AB3B47D926B8D09C00763DDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "../../../../../../Desktop/Pokemon-SwiftUI/Pokemon-SwiftUI/Pokemon-SwiftUI/Assets.xcassets"; sourceTree = "<group>"; };
+		AB9CB29626BB2205001467F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +68,7 @@
 				AB30A2AC26B9BE1D00D65689 /* SelectionPokemon.swift */,
 				AB30A2AA26B99FD200D65689 /* ListPokemon.swift */,
 				AB3B47D726B8D04B00763DDC /* CardPokemon.swift */,
-				AB3B47D926B8D09C00763DDC /* Assets.xcassets */,
+				AB9CB29626BB2205001467F7 /* Assets.xcassets */,
 				AB3B47CC26B8CECD00763DDC /* LaunchScreen.storyboard */,
 				AB3B47CF26B8CECD00763DDC /* Info.plist */,
 				AB3B47C926B8CECD00763DDC /* Preview Content */,
@@ -143,7 +143,7 @@
 			files = (
 				AB3B47CE26B8CECD00763DDC /* LaunchScreen.storyboard in Resources */,
 				AB3B47CB26B8CECD00763DDC /* Preview Assets.xcassets in Resources */,
-				AB3B47DA26B8D09C00763DDC /* Assets.xcassets in Resources */,
+				AB9CB29726BB2205001467F7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

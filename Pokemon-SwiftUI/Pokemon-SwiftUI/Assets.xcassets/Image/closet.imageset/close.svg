@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="83" height="82" viewBox="0 0 83 82">
+  <defs>
+    <filter id="Elipse_1" x="0" y="0" width="83" height="82" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Línea_1" x="13.408" y="13.408" width="56.184" height="56.184" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Línea_2" x="13.408" y="13.408" width="56.184" height="56.184" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-3"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Grupo_8" data-name="Grupo 8" transform="translate(-31 -790)">
+    <g id="Grupo_6" data-name="Grupo 6" transform="translate(40 795.59)">
+      <g id="Grupo_1" data-name="Grupo 1">
+        <g transform="matrix(1, 0, 0, 1, -9, -5.59)" filter="url(#Elipse_1)">
+          <ellipse id="Elipse_1-2" data-name="Elipse 1" cx="32.5" cy="32" rx="32.5" ry="32" transform="translate(9 6)" fill="#fff"/>
+        </g>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, -9, -5.59)" filter="url(#Línea_1)">
+        <line id="Línea_1-2" data-name="Línea 1" y1="38" transform="translate(28.06 25.06) rotate(-45)" fill="none" stroke="#de6e6e" stroke-linecap="round" stroke-width="8"/>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, -9, -5.59)" filter="url(#Línea_2)">
+        <line id="Línea_2-2" data-name="Línea 2" x2="38" transform="translate(28.06 51.94) rotate(-45)" fill="none" stroke="#de6e6e" stroke-linecap="round" stroke-width="8"/>
+      </g>
+    </g>
+  </g>
+</svg>
