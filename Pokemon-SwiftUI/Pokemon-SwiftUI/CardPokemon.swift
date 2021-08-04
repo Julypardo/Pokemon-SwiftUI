@@ -5,6 +5,7 @@ struct CardPokemon: View {
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color("7CB8DE"), Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            
                 .edgesIgnoringSafeArea(.all)
             
             if UIScreen.main.bounds.height <= 736 {
@@ -47,12 +48,17 @@ struct InfoCard: View {
                     
                     VStack(alignment: .leading){
                         Text("Name")
-                            .font(.custom("Gilroy-Bold", size: 30))
+                            .font(.title)
+                            .fontWeight(.bold)
                         
                         HStack(spacing: 0) {
                             Text("Types")
+                                .font(.body)
+                                .fontWeight(.regular)
                             Spacer()
                             Text("0033")
+                                .font(.body)
+                                .fontWeight(.regular)
                         }
                         .font(.custom("Gilroy-Bold", size: 18))
                         .padding(.trailing, 10)
@@ -62,11 +68,11 @@ struct InfoCard: View {
                     .foregroundColor(.white)
                 }
                 .frame(width: 226, height: 92, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                .background(RoundedCorners(color:Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2006193249)),tl: 0, tr: 20, bl: 0, br: 20).blur(radius: 2))
+                .background(RoundedCorners(color:Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2006193249)),tl: 0, tr: 20, bl: 0, br: 20).opacity(0.5))
                 
                 Spacer()
             }
-            .padding(.top, 10)
+            .padding(.top, 30)
             
             Spacer()
             
@@ -76,7 +82,7 @@ struct InfoCard: View {
                         .padding(20)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(RoundedCorners(color:Color("F1F5F9"),tl: 30, tr: 30, bl: 0, br: 0))
+                .background(RoundedCorners(color:Color("F2F8FF"),tl: 30, tr: 30, bl: 0, br: 0))
                 .offset(x: 0, y: 130)
                 
                 Image("pokemon1")
@@ -91,7 +97,8 @@ struct InfoCard: View {
                 
                 VStack(alignment: .leading){
                     Text("About")
-                        .font(.custom("Gilroy-Bold", size: 25))
+                        .font(.title)
+                        .fontWeight(.bold)
                     
                     Divider()
                         .frame(width: 285, height: 2)
@@ -99,20 +106,45 @@ struct InfoCard: View {
                     HStack {
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Species")
+                                .font(.body)
+                                .fontWeight(.regular)
                             Text("Height")
+                                .font(.body)
+                                .fontWeight(.regular)
                             Text("Weight")
+                                .font(.body)
+                                .fontWeight(.regular)
                             Text("Abilities")
+                                .font(.body)
+                                .fontWeight(.regular)
                             Text("Egg Groups")
+                                .font(.body)
+                                .fontWeight(.regular)
                             Text("Egg Cycle")
+                                .font(.body)
+                                .fontWeight(.regular)
                         }
+                        
                         VStack(alignment: .leading, spacing: 10) {
                             
                             Text("Seed")
+                                .font(.body)
+                                .fontWeight(.regular)
                             Text("2’3’6 (0.70 cm)")
+                                .font(.body)
+                                .fontWeight(.regular)
                             Text("15.2 lbs (6.9 kg)")
+                                .font(.body)
+                                .fontWeight(.regular)
                             Text("Overgrow, Chlorophyl")
+                                .font(.body)
+                                .fontWeight(.regular)
                             Text("Monster")
+                                .font(.body)
+                                .fontWeight(.regular)
                             Text("Grass")
+                                .font(.body)
+                                .fontWeight(.regular)
                         }
                         .padding(.leading, 30)
                     }
@@ -126,7 +158,7 @@ struct InfoCard: View {
                 .padding(.top, 10)
                 .padding(.bottom)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(RoundedCorners(color: Color("F1F5F9"), tl: 0, tr: 0, bl: 30, br: 0))
+                .background(RoundedCorners(color: Color("F2F8FF"), tl: 0, tr: 0, bl: 30, br: 0))
                 .edgesIgnoringSafeArea(.all)
                 .padding(.top, -5)
                 
@@ -173,3 +205,4 @@ struct RoundedCorners: View {
         }
     }
 }
+
