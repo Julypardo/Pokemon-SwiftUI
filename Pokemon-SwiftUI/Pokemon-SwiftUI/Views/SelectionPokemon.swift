@@ -6,15 +6,11 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct SelectionPokemon: View {
     
-    @State var x : [CGFloat] = [0,0,0,0,0,0,0]
-    @State var degree : [Double] = [0,0,0,0,0,0,0]
-    @State var position : Int = 6
-    @State private var animateStrokeStart = false
-    @State private var animateStrokeEnd = true
-    @State private var isRotating = true
+    @ObservedObject var viewModel = PokemonCardViewModel()
     
     var body: some View {
         
@@ -23,10 +19,10 @@ struct SelectionPokemon: View {
                 .edgesIgnoringSafeArea(.all)
            
             VStack{
-                
-                ZStack{
+                ZStack {
                     HStack {
                         Spacer()
+                        
                         Text("Pokedex")
                             .font(.title)
                             .foregroundColor(Color("707070"))
@@ -43,6 +39,7 @@ struct SelectionPokemon: View {
                             .aspectRatio(contentMode: .fill)
                             .clipShape(Circle())
                             .frame(width: 50, height: 50)
+                        
                         Spacer()
                         
                         NavigationLink(destination: ListPokemon()){
@@ -57,69 +54,30 @@ struct SelectionPokemon: View {
                 Spacer()
                 
                 ZStack {
-                    ForEach(0..<7,id: \.self) { i in
-                        
-                        NavigationLink(destination: CardPokemon()){
-                            
-                            Card()
-                                
-                                .onAppear{
-                                    print(i)
-                                }
-                                .offset(x: self.x[i])
-                                .rotationEffect(.init(degrees: self.degree[i]))
-                                .gesture(DragGesture()
-                                            .onChanged({ (value) in
-                                                
-                                                if value.translation.width > 0{
-                                                    self.x[i] = value.translation.width
-                                                    self.degree[i] = 8
-                                                }
-                                                else {
-                                                    self.x[i] = value.translation.width
-                                                    self.degree[i] = -8
-                                                }
-                                            })
-                                            .onEnded({ (value) in
-                                                
-                                                if value.translation.width > 0{
-                                                    
-                                                    if value.translation.width > 100 {
-                                                        self.x[i] = 500
-                                                        self.degree[i] = 15
-                                                    }
-                                                    else{
-                                                        self.x[i] = 0
-                                                        self.degree[i] = 0
-                                                    }
-                                                }
-                                                else {
-                                                    if value.translation.width < -100 {
-                                                        self.x[i] = -500
-                                                        self.degree[i] = -15
-                                                    }
-                                                    else{
-                                                        self.x[i] = 0
-                                                        self.degree[i] = 0
-                                                    }
-                                                }
-                                            }))
+                    if self.viewModel.pokemonInfo.count > 0 {
+                        ForEach(Array(self.viewModel.pokemonInfo.enumerated()), id: \.element) { i, element in
+                            //NavigationLink(destination: CardPokemon()) {
+                                Card(pokemon: element)
+                                    .offset(x: self.viewModel.x[i])
+                                    .rotationEffect(.init(degrees: self.viewModel.degree[i]))
+                                    .gesture(DragGesture().onChanged({ (value) in
+                                        self.viewModel.discardGesture(value: value, index: i)
+                                    })
+                                    .onEnded({ (value) in
+                                        self.viewModel.dragEnded(value: value, index: i)
+                                    }))
+                            //}
                         }
+                        .padding(.horizontal, 30)
+                        .animation(.default)
                     }
-                    .padding(.horizontal, 30)
-                    .animation(.default)
                 }
                 
                 Spacer()
                 
-                HStack(spacing: 40){
-                    
+                HStack(spacing: 40) {
                     Button(action: {
-                        if self.position >= 0 {
-                            self.x[position] = -500
-                            self.degree[position] = -15
-                        }
-                        self.position = position - 1
+                        self.viewModel.rejectPokemon()
                     }) {
                         Image(uiImage: UIImage(named: "closet")!)
                             .resizable()
@@ -130,11 +88,7 @@ struct SelectionPokemon: View {
                     }
                     
                     Button(action: {
-                        if self.position >= 0 {
-                            self.x[position] = 500
-                            self.degree[position] = 15
-                        }
-                        self.position = position - 1
+                        self.viewModel.catchPokemon()
                     }) {
                         Image(uiImage: UIImage(named: "accept")!)
                             .resizable()
@@ -150,6 +104,9 @@ struct SelectionPokemon: View {
         }
         .foregroundColor(Color("707070"))
         .navigationBarHidden(true)
+        .onAppear {
+            self.viewModel.getPokemonList()
+        }
     }
 }
 
@@ -160,15 +117,18 @@ struct PokemonSelection_Previews: PreviewProvider {
 }
 
 struct Card : View {
+    
+    var pokemon: Pokemon?
+    
     var body :  some View {
         
-        ZStack{
+        ZStack {
             LinearGradient(gradient: Gradient(colors: [Color("7CB8DE"), Color(#colorLiteral(red: 0.9386602009, green: 0.9555124231, blue: 0.9482963104, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .frame(height: UIScreen.main.bounds.height * 0.6)
                 .cornerRadius(20)
                 .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05636414792)), radius: 7)
             
-            Image("pokemon1")
+            WebImage(url: URL(string: self.pokemon?.sprites?.other?.officialArtwork?.frontDefault ?? ""))
                 .resizable()
                 .renderingMode(.original)
                 .aspectRatio(contentMode: .fit)
@@ -179,16 +139,21 @@ struct Card : View {
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 10) {
-                        
-                        Text("Name")
+                        Text("\(self.pokemon!.name!.capitalizingFirstLetter())")
                             .font(.title)
                             .foregroundColor(Color("707070"))
                             .fontWeight(.bold)
                         
-                        Text("Types")
-                            .font(.body)
-                            .foregroundColor(Color("707070"))
-                            .fontWeight(.bold)
+                        if self.pokemon?.types != nil {
+                            HStack {
+                                ForEach(self.pokemon!.types!, id: \.self) { item in
+                                    Text("\(item.type?.name ?? "")")
+                                        .font(.body)
+                                        .foregroundColor(Color("707070"))
+                                        .fontWeight(.bold)
+                                }
+                            }
+                        }
                     }
                     .padding(.leading, 20)
                     
