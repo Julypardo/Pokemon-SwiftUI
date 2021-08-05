@@ -44,7 +44,11 @@ struct ListPokemon: View {
                 if #available(iOS 14.0, *) {
                     ScrollView(showsIndicators: false) {
                         LazyVStack {
-                            ListCatchPokemon(viewModel: self.viewModel)
+                            ForEach(self.viewModel.pokemons, id: \.id) { element in
+                                NavigationLink(destination: CardPokemon(pokemon: .constant(nil), pokemonCatch: .constant(element))) {
+                                    CardCatchPokemon(pokemon: element)
+                                }
+                            }
                         }
                     }
                     .padding(.top, 20)
@@ -70,60 +74,44 @@ struct ListPokemon_Previews: PreviewProvider {
     }
 }
 
-struct ListCatchPokemon: View {
+struct CardCatchPokemon: View {
     
-    @ObservedObject var viewModel: ListPokemonViewModel
-    
-    @State var activePokemon: CatchPokemon?
-    @State var cardIsActive = false
+    var pokemon: CatchPokemon
     
     var body: some View {
         
-        ForEach(Array(self.viewModel.pokemons.enumerated()), id: \.element) { index, element in
-            VStack(spacing: 0) {
-                ZStack {
-                    LinearGradient(gradient: Gradient(colors: [Color.white, Color("C1F1FF")]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                        .edgesIgnoringSafeArea(.all)
-                    
-                    HStack {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text(element.name.capitalizingFirstLetter())
-                                .font(.title)
-                                .foregroundColor(Color("707070"))
-                                .fontWeight(.bold)
-                            
-                            Text(element.types)
-                                .font(.body)
-                                .foregroundColor(Color("707070"))
-                                .fontWeight(.bold)
-                        }
+        VStack(spacing: 0) {
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color.white, Color("C1F1FF")]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .edgesIgnoringSafeArea(.all)
+                
+                HStack {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(self.pokemon.name.capitalizingFirstLetter())
+                            .font(.title)
+                            .foregroundColor(Color("707070"))
+                            .fontWeight(.bold)
                         
-                        Spacer()
-                        
-                        WebImage(url: URL(string: element.image))
-                            .resizable()
-                            .renderingMode(.original)
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 133, height: 133)
+                        Text(self.pokemon.types)
+                            .font(.body)
+                            .foregroundColor(Color("707070"))
+                            .fontWeight(.bold)
                     }
-                    .padding(.horizontal, 10)
+                    
+                    Spacer()
+                    
+                    WebImage(url: URL(string: self.pokemon.image))
+                        .resizable()
+                        .renderingMode(.original)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 133, height: 133)
                 }
-                .cornerRadius(20)
-                .frame(height: 150)
-                .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.07)), radius: 5)
-                .padding(5)
+                .padding(.horizontal, 10)
             }
-            .onTapGesture {
-                self.activePokemon = element
-                self.cardIsActive = true
-            }
-            
-            if self.activePokemon != nil {
-                NavigationLink(destination: CardPokemon(pokemon: .constant(nil),
-                                                        pokemonCatch: .constant(element)),
-                               isActive: self.$cardIsActive,
-                               label: EmptyView.init)
-            }
+            .cornerRadius(20)
+            .frame(height: 150)
+            .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.07)), radius: 5)
+            .padding(5)
         }
     }
 }
