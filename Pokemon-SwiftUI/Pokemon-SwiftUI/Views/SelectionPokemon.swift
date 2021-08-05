@@ -56,10 +56,18 @@ struct SelectionPokemon: View {
                 
                 Spacer()
                 
-                if self.viewModel.pokemonInfo.count > 0 {
-                    ZStack {
-                        ForEach(Array(self.viewModel.pokemonInfo.enumerated()), id: \.element) { i, element in
-                            Card(pokemon: element)
+                
+                ZStack {
+                    if self.viewModel.position == self.viewModel.pokemonInfo.count - 10 || self.viewModel.position == -1 {
+                        ActivityIndicator(isAnimating: .constant(true), style: .large)
+                            .onAppear {
+                                self.viewModel.getPokemonList()
+                            }
+                    }
+                    
+                    if self.viewModel.pokemonInfo.count > 0 {
+                        ForEach(self.viewModel.pokemonInfo.indices, id: \.self) { i in
+                            Card(pokemon: self.viewModel.pokemonInfo[i])
                                 .frame(height: UIScreen.main.bounds.height * 0.6)
                                 .offset(x: self.viewModel.x[i])
                                 .rotationEffect(.init(degrees: self.viewModel.degree[i]))
@@ -70,7 +78,7 @@ struct SelectionPokemon: View {
                                     self.viewModel.dragEnded(value: value, index: i)
                                 }))
                                 .onTapGesture {
-                                    self.activePokemon = element
+                                    self.activePokemon = self.viewModel.pokemonInfo[i]
                                     self.cardIsActive = true
                                 }
                             
@@ -117,11 +125,6 @@ struct SelectionPokemon: View {
         }
         .foregroundColor(Color("707070"))
         .navigationBarHidden(true)
-        .onAppear {
-            if self.viewModel.pokemonInfo.count == 0 {
-                self.viewModel.getPokemonList()
-            }
-        }
     }
 }
 
