@@ -18,7 +18,7 @@ struct SelectionPokemon: View {
     var body: some View {
         
         ZStack {
-            Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+            Color(#colorLiteral(red: 0, green: 0.568627451, blue: 0.5764705882, alpha: 0.1100434562))
                 .edgesIgnoringSafeArea(.all)
            
             VStack{
@@ -141,7 +141,8 @@ struct Card : View {
     var body :  some View {
         
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color("7CB8DE"), Color(#colorLiteral(red: 0.9386602009, green: 0.9555124231, blue: 0.9482963104, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 0.9875793457)), Color(#colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 0.8105205005)), Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .background(Color.white)
                 .frame(height: UIScreen.main.bounds.height * 0.6)
                 .cornerRadius(20)
                 .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05636414792)), radius: 7)
@@ -158,17 +159,15 @@ struct Card : View {
                 HStack {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("\(self.pokemon!.name!.capitalizingFirstLetter())")
-                            .font(.title)
+                            .font(.system(size: 20, weight: .bold, design: .default))
                             .foregroundColor(Color("707070"))
-                            .fontWeight(.bold)
                         
                         if self.pokemon?.types != nil {
                             HStack {
                                 ForEach(self.pokemon!.types!, id: \.self) { item in
                                     Text("\(item.type?.name ?? "")")
-                                        .font(.body)
+                                        .font(.system(size: 18, weight: .regular, design: .default))
                                         .foregroundColor(Color("707070"))
-                                        .fontWeight(.bold)
                                 }
                             }
                         }
