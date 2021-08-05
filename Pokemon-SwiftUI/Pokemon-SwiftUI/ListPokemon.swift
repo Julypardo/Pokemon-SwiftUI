@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct ListPokemon: View {
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     var body: some View {
+        
         ZStack {
             Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
                 .edgesIgnoringSafeArea(.all)
@@ -24,12 +28,17 @@ struct ListPokemon: View {
                 }
                 Spacer()
             }
+            
             VStack(alignment: .leading){
                 
                 HStack {
-                    Image(systemName: "arrow.left")
-                        .resizable()
-                        .frame(width: 20, height: 20)
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                    }
                     
                     Spacer()
                 }
@@ -50,7 +59,6 @@ struct ListPokemon: View {
             .padding(.horizontal, 30)
         }
         .foregroundColor(Color("707070"))
-        
     }
 }
 
@@ -60,7 +68,7 @@ struct ListPokemon_Previews: PreviewProvider {
     }
 }
 
-struct item: Identifiable {
+struct Item: Identifiable {
     var id = UUID()
     var name: String
     var types: String
@@ -69,48 +77,60 @@ struct item: Identifiable {
 
 struct List: View {
     
-    let data: [item] = [
-        item(name: "Name", types: "Types", imagePokemon: "pokemon4"),
-        item(name: "Name", types: "Types", imagePokemon: "pokemon3"),
-        item( name: "Name", types: "Types", imagePokemon: "pokemon2"),
-        item( name: "Name", types: "Types", imagePokemon: "pokemon1"),
+    let data: [Item] = [
+        Item(name: "Name", types: "Types", imagePokemon: "pokemon4"),
+        Item(name: "Name", types: "Types", imagePokemon: "pokemon3"),
+        Item( name: "Name", types: "Types", imagePokemon: "pokemon2"),
+        Item( name: "Name", types: "Types", imagePokemon: "pokemon1"),
     ]
     
+    @State var selection: Int?
+    
     var body: some View {
-        ForEach (data) { item in
+        
+        ForEach (0..<self.data.count, id: \.self) { index in
             
-            VStack(spacing: 0) {
-                ZStack {
-                    LinearGradient(gradient: Gradient(colors: [Color.white, Color("C1F1FF")]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                        .edgesIgnoringSafeArea(.all)
-                    
-                    HStack {
+            Button(action: {
+                self.selection = index
+            }) {
+                VStack(spacing: 0) {
+                    ZStack {
+                        LinearGradient(gradient: Gradient(colors: [Color.white, Color("C1F1FF")]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                            .edgesIgnoringSafeArea(.all)
                         
-                        VStack(alignment: .leading, spacing: 10){
-                            Text(item.name)
-                                .font(.title)
-                                .foregroundColor(Color("707070"))
-                                .fontWeight(.bold)
-                            Text(item.types)
-                                .font(.body)
-                                .foregroundColor(Color("707070"))
-                                .fontWeight(.bold)
+                        HStack {
+                            
+                            VStack(alignment: .leading, spacing: 10){
+                                Text(self.data[index].name)
+                                    .font(.title)
+                                    .foregroundColor(Color("707070"))
+                                    .fontWeight(.bold)
+                                Text(self.data[index].types)
+                                    .font(.body)
+                                    .foregroundColor(Color("707070"))
+                                    .fontWeight(.bold)
+                            }
+                            Spacer()
+                            
+                            Image(self.data[index].imagePokemon)
+                                .resizable()
+                                .renderingMode(.original)
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 133, height: 133)
                         }
-                        Spacer()
-                        
-                        Image(item.imagePokemon)
-                            .resizable()
-                            .renderingMode(.original)
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 133, height: 133)
+                        .padding(.horizontal, 10)
                     }
-                    .padding(.horizontal, 10)
+                    .cornerRadius(20)
+                    .frame(height: 150)
+                    .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.07)), radius: 5)
+                    .padding(5)
                 }
-                .cornerRadius(20)
-                .frame(height: 150)
-                .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.07)), radius: 5)
-                .padding(5)
             }
+            
+            NavigationLink(destination: CardPokemon(),
+                           tag: index,
+                           selection: self.$selection,
+                           label: EmptyView.init)
         }
     }
 }
