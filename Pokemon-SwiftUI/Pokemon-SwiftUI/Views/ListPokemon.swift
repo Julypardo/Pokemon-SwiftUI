@@ -17,8 +17,7 @@ struct ListPokemon: View {
             Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
                 .edgesIgnoringSafeArea(.all)
             
-            VStack(alignment: .leading){
-                
+            VStack(alignment: .leading) {
                 HStack {
                     Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
@@ -70,7 +69,7 @@ struct List: View {
         Item(name: "Name", types: "Types", imagePokemon: "pokemon4"),
         Item(name: "Name", types: "Types", imagePokemon: "pokemon3"),
         Item( name: "Name", types: "Types", imagePokemon: "pokemon2"),
-        Item( name: "Name", types: "Types", imagePokemon: "pokemon1"),
+        Item( name: "Name", types: "Types", imagePokemon: "pokemon1")
     ]
     
     @State var selection: Int?
@@ -78,7 +77,6 @@ struct List: View {
     var body: some View {
         
         ForEach (0..<self.data.count, id: \.self) { index in
-            
             Button(action: {
                 self.selection = index
             }) {
@@ -88,8 +86,7 @@ struct List: View {
                             .edgesIgnoringSafeArea(.all)
                         
                         HStack {
-                            
-                            VStack(alignment: .leading, spacing: 10){
+                            VStack(alignment: .leading, spacing: 10) {
                                 Text(self.data[index].name)
                                     .font(.title)
                                     .foregroundColor(Color("707070"))
@@ -99,6 +96,7 @@ struct List: View {
                                     .foregroundColor(Color("707070"))
                                     .fontWeight(.bold)
                             }
+                            
                             Spacer()
                             
                             Image(self.data[index].imagePokemon)
@@ -123,8 +121,3 @@ struct List: View {
         }
     }
 }
-
-
-
-
-

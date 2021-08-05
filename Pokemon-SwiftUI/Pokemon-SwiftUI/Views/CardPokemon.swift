@@ -14,6 +14,7 @@ struct CardPokemon: View {
     @State var likeHeart: Bool = true
     
     var body: some View {
+        
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color("7CB8DE"), Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
@@ -31,25 +32,13 @@ struct CardPokemon: View {
                     
                     Spacer()
                     
-                    if self.likeHeart {
-                        Button(action: {
-                            self.likeHeart.toggle()
-                        }) {
-                            Image(systemName: "heart")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 23, height: 20)
-                        }
-                        
-                    } else {
-                        Button(action: {
-                            self.likeHeart.toggle()
-                        }) {
-                            Image(systemName: "heart.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 23, height: 20)
-                        }
+                    Button(action: {
+                        self.likeHeart.toggle()
+                    }) {
+                        Image(systemName: self.likeHeart ? "heart" : "heart.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 23, height: 20)
                     }
                 }
                 .foregroundColor(Color.white)
@@ -57,12 +46,10 @@ struct CardPokemon: View {
                 
                 if UIScreen.main.bounds.height <= 736 {
                     ScrollView {
-                        
                         InfoCard()
                     }
                 } else {
                     InfoCard()
-                    
                 }
             }
         }
@@ -81,14 +68,14 @@ struct CardPokemon_Previews: PreviewProvider {
 struct InfoCard: View {
     
     var body: some View {
+        
         VStack(spacing: 0) {
-            
             InfPokemon()
             
             Spacer()
             
-            ZStack{
-                VStack{
+            ZStack {
+                VStack {
                     Text(" ")
                         .padding(20)
                 }
@@ -103,9 +90,8 @@ struct InfoCard: View {
                     .frame(width: 325, height: 325)
             }
             
-            VStack(alignment: .leading){
-                
-                VStack(alignment: .leading){
+            VStack(alignment: .leading) {
+                VStack(alignment: .leading) {
                     Text("About")
                         .font(.title)
                         .fontWeight(.bold)
@@ -113,45 +99,55 @@ struct InfoCard: View {
                     Divider()
                         .frame(width: 285, height: 2)
                         .background(Color("1791E7"))
+                    
                     HStack {
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Species")
                                 .font(.body)
                                 .fontWeight(.regular)
+                            
                             Text("Height")
                                 .font(.body)
                                 .fontWeight(.regular)
+                            
                             Text("Weight")
                                 .font(.body)
                                 .fontWeight(.regular)
+                            
                             Text("Abilities")
                                 .font(.body)
                                 .fontWeight(.regular)
+                            
                             Text("Egg Groups")
                                 .font(.body)
                                 .fontWeight(.regular)
+                            
                             Text("Egg Cycle")
                                 .font(.body)
                                 .fontWeight(.regular)
                         }
                         
                         VStack(alignment: .leading, spacing: 10) {
-                            
                             Text("Seed")
                                 .font(.body)
                                 .fontWeight(.regular)
+                            
                             Text("2’3’6 (0.70 cm)")
                                 .font(.body)
                                 .fontWeight(.regular)
+                            
                             Text("15.2 lbs (6.9 kg)")
                                 .font(.body)
                                 .fontWeight(.regular)
+                            
                             Text("Overgrow, Chlorophyl")
                                 .font(.body)
                                 .fontWeight(.regular)
+                            
                             Text("Monster")
                                 .font(.body)
                                 .fontWeight(.regular)
+                            
                             Text("Grass")
                                 .font(.body)
                                 .fontWeight(.regular)
@@ -175,7 +171,6 @@ struct InfoCard: View {
             .padding(.bottom, 50)
             .background(Color.white)
             .edgesIgnoringSafeArea(.bottom)
-            
         }
     }
 }
@@ -188,9 +183,9 @@ struct RoundedCorners: View {
     var br: CGFloat = 0.0
     
     var body: some View {
+        
         GeometryReader { geometry in
             Path { path in
-                
                 let w = geometry.size.width
                 let h = geometry.size.height
                 
@@ -216,11 +211,12 @@ struct RoundedCorners: View {
 
 
 struct InfPokemon: View {
+    
     var body: some View {
         
         HStack {
             ZStack {
-                VStack(alignment: .leading){
+                VStack(alignment: .leading) {
                     Text("Name")
                         .font(.title)
                         .fontWeight(.bold)
@@ -229,7 +225,9 @@ struct InfPokemon: View {
                         Text("Types")
                             .font(.body)
                             .fontWeight(.regular)
+                        
                         Spacer()
+                        
                         Text("0033")
                             .font(.body)
                             .fontWeight(.regular)
@@ -245,6 +243,5 @@ struct InfPokemon: View {
             
             Spacer()
         }
-        
     }
 }
