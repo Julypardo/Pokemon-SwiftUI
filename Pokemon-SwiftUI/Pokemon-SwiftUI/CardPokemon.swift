@@ -1,19 +1,71 @@
+//
+//  PokemonSelection.swift
+//  Pokemon-SwiftUI
+//
+//  Created by July on 3/08/21.
+//
 
 import SwiftUI
 
 struct CardPokemon: View {
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @State var likeHeart: Bool = true
+    
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color("7CB8DE"), Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
-            
                 .edgesIgnoringSafeArea(.all)
             
-            if UIScreen.main.bounds.height <= 736 {
-                ScrollView {
-                    InfoCard()
+            VStack {
+                HStack {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 20, height: 20)
+                    }.padding(.top, 20)
+                    
+                    Spacer()
+                    
+                    if self.likeHeart {
+                        Button(action: {
+                            self.likeHeart.toggle()
+                        }) {
+                            Image(systemName: "heart")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 23, height: 20)
+                        }
+                        .padding(.top, 20)
+                        
+                    } else {
+                        Button(action: {
+                            self.likeHeart.toggle()
+                        }) {
+                            Image(systemName: "heart.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 23, height: 20)
+                        }
+                        .padding(.top, 20)
+                    }
                 }
-            } else {
-                InfoCard()
+                .foregroundColor(Color.white)
+                .padding(.all, 30)
+                
+                if UIScreen.main.bounds.height <= 736 {
+                    ScrollView {
+                        
+                        InfoCard()
+                    }
+                } else {
+                    InfoCard()
+                    
+                }
             }
         }
     }
@@ -21,58 +73,18 @@ struct CardPokemon: View {
 
 struct CardPokemon_Previews: PreviewProvider {
     static var previews: some View {
-        CardPokemon()
+        NavigationView {
+            CardPokemon()
+        }
     }
 }
 
 struct InfoCard: View {
+    
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
-                Image(systemName: "arrow.left")
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                
-                Spacer()
-                
-                Image(systemName: "heart")
-                    .resizable()
-                    .frame(width: 23, height: 20)
-            }
-            .foregroundColor(Color.white)
-            .padding(.horizontal, 30)
             
-            
-            HStack {
-                ZStack {
-                    
-                    VStack(alignment: .leading){
-                        Text("Name")
-                            .font(.title)
-                            .fontWeight(.bold)
-                        
-                        HStack(spacing: 0) {
-                            Text("Types")
-                                .font(.body)
-                                .fontWeight(.regular)
-                            Spacer()
-                            Text("0033")
-                                .font(.body)
-                                .fontWeight(.regular)
-                        }
-                        .font(.custom("Gilroy-Bold", size: 18))
-                        .padding(.trailing, 10)
-                        .padding(.top, 10)
-                    }
-                    .padding(.leading, 30)
-                    .foregroundColor(.white)
-                }
-                .frame(width: 226, height: 92, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                .background(RoundedCorners(color:Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2006193249)),tl: 0, tr: 20, bl: 0, br: 20).opacity(0.5))
-                
-                Spacer()
-            }
-            .padding(.top, 30)
+            InfPokemon()
             
             Spacer()
             
@@ -91,7 +103,6 @@ struct InfoCard: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 325, height: 325)
             }
-            
             
             VStack(alignment: .leading){
                 
@@ -161,7 +172,6 @@ struct InfoCard: View {
                 .background(RoundedCorners(color: Color("F2F8FF"), tl: 0, tr: 0, bl: 30, br: 0))
                 .edgesIgnoringSafeArea(.all)
                 .padding(.top, -5)
-                
             }
             .padding(.bottom, 50)
             .background(Color.white)
@@ -185,7 +195,6 @@ struct RoundedCorners: View {
                 let w = geometry.size.width
                 let h = geometry.size.height
                 
-                // Make sure we do not exceed the size of the rectangle
                 let tr = min(min(self.tr, h/2), w/2)
                 let tl = min(min(self.tl, h/2), w/2)
                 let bl = min(min(self.bl, h/2), w/2)
@@ -206,3 +215,37 @@ struct RoundedCorners: View {
     }
 }
 
+
+struct InfPokemon: View {
+    var body: some View {
+        
+        HStack {
+            ZStack {
+                VStack(alignment: .leading){
+                    Text("Name")
+                        .font(.title)
+                        .fontWeight(.bold)
+                    
+                    HStack(spacing: 0) {
+                        Text("Types")
+                            .font(.body)
+                            .fontWeight(.regular)
+                        Spacer()
+                        Text("0033")
+                            .font(.body)
+                            .fontWeight(.regular)
+                    }
+                    .padding(.trailing, 10)
+                    .padding(.top, 10)
+                }
+                .padding(.leading, 30)
+                .foregroundColor(.white)
+            }
+            .frame(width: 226, height: 92)
+            .background(RoundedCorners(color:Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2006193249)),tl: 0, tr: 20, bl: 0, br: 20).opacity(0.5))
+            
+            Spacer()
+        }
+        
+    }
+}
