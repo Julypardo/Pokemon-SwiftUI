@@ -197,14 +197,12 @@ struct InfoCard: View {
                                 ForEach(self.pokemon!.abilities!, id: \.self) { item in
                                     Text("\(item.ability?.name ?? "")")
                                         .font(.system(size: 18, weight: .regular, design: .default))
-                                      //  .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
-                                }
+                               }
                             }
                             .frame(width: UIScreen.main.bounds.width, alignment: .leading)
                         } else {
                             Text("\(self.pokemonCatch?.abilities ?? "")")
                                 .font(.system(size: 18, weight: .regular, design: .default))
-                               // .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
                         }
                         
                         Text("Moves")
@@ -216,13 +214,13 @@ struct InfoCard: View {
                                     ForEach(0..<10, id: \.self) { item in
                                         Text("\(self.pokemon!.moves![item].move?.name ?? "")")
                                             .font(.system(size: 18, weight: .regular, design: .default))
-                                          //  .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
+                                            .padding(.trailing, 30)
                                     }
                                 } else {
                                     ForEach(0..<self.pokemon!.moves!.count, id: \.self) { item in
                                         Text("\(self.pokemon!.moves![item].move?.name ?? "")")
                                             .font(.system(size: 18, weight: .regular, design: .default))
-                                           // .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
+                                            .padding(.trailing, 30)
                                     }
                                 }
                             }
@@ -230,7 +228,7 @@ struct InfoCard: View {
                         } else {
                             Text("\(self.pokemonCatch?.moves ?? "")")
                                 .font(.system(size: 18, weight: .regular, design: .default))
-                               // .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
+                                .padding(.trailing, 30)
                         }
                     }
                     .padding(.top, 20)
@@ -239,6 +237,7 @@ struct InfoCard: View {
                 }
                 .foregroundColor(Color("707070"))
                 .padding(.leading, 30)
+              
                 .padding(.top, 10)
                 .padding(.bottom)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -248,7 +247,8 @@ struct InfoCard: View {
             }
             .padding(.bottom, 50)
             .background(Color.white)
-            .edgesIgnoringSafeArea(.bottom)
+            .edgesIgnoringSafeArea(.all)
+            
         }
     }
 }
