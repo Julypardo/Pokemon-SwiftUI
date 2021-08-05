@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImageSwiftUI
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,6 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Add multiple caches
+        let cache = SDImageCache(namespace: "tiny")
+        cache.config.maxMemoryCost = 1024 * 1024 * 1024 // 1024MB memory
+        cache.config.maxDiskSize = 1024 * 1024 * 1024 // 1024MB disk
+        SDImageCachesManager.shared.addCache(cache)
+        SDWebImageManager.defaultImageCache = SDImageCachesManager.shared
         return true
     }
 
