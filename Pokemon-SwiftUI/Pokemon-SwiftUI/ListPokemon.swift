@@ -17,18 +17,6 @@ struct ListPokemon: View {
             Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
                 .edgesIgnoringSafeArea(.all)
             
-            VStack {
-                HStack {
-                    Spacer()
-                    Image("pokemonBorder")
-                        .resizable()
-                        .renderingMode(.original)
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 110, height: 110)
-                }
-                Spacer()
-            }
-            
             VStack(alignment: .leading){
                 
                 HStack {
@@ -59,6 +47,7 @@ struct ListPokemon: View {
             .padding(.horizontal, 30)
         }
         .foregroundColor(Color("707070"))
+        .navigationBarHidden(true)
     }
 }
 

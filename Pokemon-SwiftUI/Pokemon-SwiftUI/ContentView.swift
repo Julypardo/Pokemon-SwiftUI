@@ -22,8 +22,10 @@ struct ContentView: View {
         
         NavigationView {
             SelectionPokemon()
+                .navigationBarHidden(true)
         }
         .navigationViewStyle(StackNavigationViewStyle())
+      
     }
 }
 

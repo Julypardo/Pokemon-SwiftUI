@@ -27,7 +27,7 @@ struct CardPokemon: View {
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 20, height: 20)
-                    }.padding(.top, 20)
+                    }
                     
                     Spacer()
                     
@@ -40,7 +40,6 @@ struct CardPokemon: View {
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 23, height: 20)
                         }
-                        .padding(.top, 20)
                         
                     } else {
                         Button(action: {
@@ -51,7 +50,6 @@ struct CardPokemon: View {
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 23, height: 20)
                         }
-                        .padding(.top, 20)
                     }
                 }
                 .foregroundColor(Color.white)
@@ -68,6 +66,7 @@ struct CardPokemon: View {
                 }
             }
         }
+        .navigationBarHidden(true)
     }
 }
 

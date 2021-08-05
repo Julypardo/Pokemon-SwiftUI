@@ -21,20 +21,7 @@ struct SelectionPokemon: View {
         ZStack {
             Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
                 .edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                HStack {
-                    Spacer()
-                    Image("pokemonBorder")
-                        .resizable()
-                        .renderingMode(.original)
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 110, height: 110)
-                }
-                .offset(y: -30)
-                Spacer()
-            }
-            
+           
             VStack{
                 
                 ZStack{
@@ -162,6 +149,7 @@ struct SelectionPokemon: View {
             }
         }
         .foregroundColor(Color("707070"))
+        .navigationBarHidden(true)
     }
 }
 
