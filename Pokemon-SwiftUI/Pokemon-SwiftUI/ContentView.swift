@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    init() {
+        UINavigationBar.appearance().isUserInteractionEnabled = false
+        UINavigationBar.appearance().backgroundColor = .clear
+        UINavigationBar.appearance().barTintColor = .clear
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().tintColor = .clear
+    }
+    
     var body: some View {
-        CardPokemon()
+        
+        NavigationView {
+            SelectionPokemon()
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
