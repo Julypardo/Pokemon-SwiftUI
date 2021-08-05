@@ -1,0 +1,11 @@
+//
+//  Development.xcconfig
+//  Pokemon-SwiftUI
+//
+//  Created by July on 4/08/21.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+ROOT_URL = https:/$()/pokeapi.co/api/v2/
