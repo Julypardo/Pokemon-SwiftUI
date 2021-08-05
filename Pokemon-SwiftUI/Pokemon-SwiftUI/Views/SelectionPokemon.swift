@@ -56,7 +56,6 @@ struct SelectionPokemon: View {
                 
                 Spacer()
                 
-                
                 ZStack {
                     if self.viewModel.position == self.viewModel.pokemonInfo.count - 10 || self.viewModel.position == -1 {
                         ActivityIndicator(isAnimating: .constant(true), style: .large)
@@ -124,6 +123,7 @@ struct SelectionPokemon: View {
             }
         }
         .foregroundColor(Color("707070"))
+        .navigationBarTitle("")
         .navigationBarHidden(true)
     }
 }

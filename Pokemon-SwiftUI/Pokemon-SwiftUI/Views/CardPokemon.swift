@@ -35,15 +35,6 @@ struct CardPokemon: View {
                     }
                     
                     Spacer()
-                    
-                    Button(action: {
-                        self.likeHeart.toggle()
-                    }) {
-                        Image(systemName: self.likeHeart ? "heart" : "heart.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 23, height: 20)
-                    }
                 }
                 .foregroundColor(Color.white)
                 .padding(.all, 30)
@@ -53,6 +44,7 @@ struct CardPokemon: View {
                 }
             }
         }
+        .navigationBarTitle("")
         .navigationBarHidden(true)
     }
 }

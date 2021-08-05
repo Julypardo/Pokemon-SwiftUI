@@ -35,6 +35,7 @@ struct ListPokemon: View {
                     Spacer()
                 }
                 .foregroundColor(Color("707070"))
+                .padding(.top, 30)
                 
                 Text("Pokedex")
                     .font(.title)
@@ -55,21 +56,17 @@ struct ListPokemon: View {
                     }
                     .padding(.top, 20)
                 } else {
-                    List{
+                    List {
                         ForEach(self.viewModel.pokemons, id: \.id) { element in
-                          //  NavigationLink(destination: CardPokemon(pokemon: .constant(nil), pokemonCatch: .constant(element))) {
+                            ZStack {
+                                NavigationLink(destination: CardPokemon(pokemon: .constant(nil), pokemonCatch: .constant(element))) {
+                                    EmptyView()
+                                }
+                                .hidden()
+                                
                                 CardCatchPokemon(pokemon: element)
-                                    .background(
-                                        NavigationLink(destination: CardPokemon(pokemon: .constant(nil), pokemonCatch: .constant(element)),
-                                                       isActive: Binding(
-                                            get: { self.tappedItem != nil },         // << handle !!
-                                            set: { _,_ in self.tappedItem = nil }
-                                                       )) {
-                                            EmptyView()
-                                        }
-                                    )
-                           // }
-                                   
+                            }
+                            .listRowInsets(EdgeInsets())
                         }
                     }
                     .padding(.top, 20)
@@ -84,6 +81,7 @@ struct ListPokemon: View {
             .padding(.horizontal, 30)
         }
         .foregroundColor(Color("707070"))
+        .navigationBarTitle("")
         .navigationBarHidden(true)
         .onAppear {
             if self.viewModel.pokemons.isEmpty {
@@ -103,7 +101,7 @@ struct CardCatchPokemon: View {
     
     var pokemon: CatchPokemon
     var text: CGFloat = UIScreen.main.bounds.height <= 726 ? 18 : 25
-    var textBody: CGFloat = UIScreen.main.bounds.height <= 726 ? 12 : 18
+    var textBody: CGFloat = UIScreen.main.bounds.height <= 726 ? 16 : 18
     var image: CGFloat = UIScreen.main.bounds.height <= 726 ? 90 : 133
     
     var body: some View {
