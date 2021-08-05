@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct CardPokemon: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @Binding var pokemon: Pokemon?
     
     @State var likeHeart: Bool = true
     
@@ -44,12 +47,8 @@ struct CardPokemon: View {
                 .foregroundColor(Color.white)
                 .padding(.all, 30)
                 
-                if UIScreen.main.bounds.height <= 736 {
-                    ScrollView {
-                        InfoCard()
-                    }
-                } else {
-                    InfoCard()
+                ScrollView(showsIndicators: false) {
+                    InfoCard(pokemon: self.$pokemon)
                 }
             }
         }
@@ -60,17 +59,64 @@ struct CardPokemon: View {
 struct CardPokemon_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CardPokemon()
+            CardPokemon(pokemon: .constant(nil))
         }
     }
 }
 
+struct InfPokemon: View {
+    
+    @Binding var pokemon: Pokemon?
+    
+    var body: some View {
+        
+        HStack {
+            ZStack {
+                VStack(alignment: .leading) {
+                    Text("\(self.pokemon?.name ?? "")")
+                        .font(.title)
+                        .fontWeight(.bold)
+                    
+                    HStack(spacing: 0) {
+                        if self.pokemon?.types != nil {
+                            HStack {
+                                ForEach(self.pokemon!.types!, id: \.self) { item in
+                                    Text("\(item.type?.name ?? "")")
+                                        .font(.body)
+                                        .fontWeight(.regular)
+                                }
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Text("#\(self.pokemon?.id ?? 0)")
+                            .font(.body)
+                            .fontWeight(.regular)
+                    }
+                    .padding(.trailing, 10)
+                    .padding(.top, 10)
+                }
+                .padding(.leading, 30)
+                .foregroundColor(.white)
+            }
+            .frame(width: 226, height: 92)
+            .background(RoundedCorners(color:Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2006193249)),tl: 0, tr: 20, bl: 0, br: 20).opacity(0.5))
+            
+            Spacer()
+        }
+    }
+}
+
+
 struct InfoCard: View {
+    
+    @Binding var pokemon: Pokemon?
     
     var body: some View {
         
         VStack(spacing: 0) {
-            InfPokemon()
+            InfPokemon(pokemon: self.$pokemon)
             
             Spacer()
             
@@ -83,7 +129,7 @@ struct InfoCard: View {
                 .background(RoundedCorners(color:Color("F2F8FF"),tl: 30, tr: 30, bl: 0, br: 0))
                 .offset(x: 0, y: 130)
                 
-                Image("pokemon1")
+                WebImage(url: URL(string: self.pokemon?.sprites?.other?.officialArtwork?.frontDefault ?? ""))
                     .resizable()
                     .renderingMode(.original)
                     .aspectRatio(contentMode: .fill)
@@ -100,62 +146,62 @@ struct InfoCard: View {
                         .frame(width: 285, height: 2)
                         .background(Color("1791E7"))
                     
-                    HStack {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Species")
-                                .font(.body)
-                                .fontWeight(.regular)
-                            
-                            Text("Height")
-                                .font(.body)
-                                .fontWeight(.regular)
-                            
-                            Text("Weight")
-                                .font(.body)
-                                .fontWeight(.regular)
-                            
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Species")
+                            .font(.body)
+                            .fontWeight(.bold)
+                        
+                        Text("\(self.pokemon?.species?.name ?? "")")
+                            .font(.body)
+                            .fontWeight(.regular)
+                        
+                        Text("Height")
+                            .font(.body)
+                            .fontWeight(.bold)
+                        
+                        Text("\((self.pokemon?.height ?? 0 / 10)) Meters")
+                            .font(.body)
+                            .fontWeight(.regular)
+                        
+                        Text("Weight")
+                            .font(.body)
+                            .fontWeight(.bold)
+                        
+                        Text("\((self.pokemon?.weight  ?? 0 / 10)) Kilograms")
+                            .font(.body)
+                            .fontWeight(.regular)
+                        
+                        if self.pokemon?.abilities != nil {
                             Text("Abilities")
                                 .font(.body)
-                                .fontWeight(.regular)
+                                .fontWeight(.bold)
                             
-                            Text("Egg Groups")
-                                .font(.body)
-                                .fontWeight(.regular)
-                            
-                            Text("Egg Cycle")
-                                .font(.body)
-                                .fontWeight(.regular)
+                            HStack {
+                                ForEach(self.pokemon!.abilities!, id: \.self) { item in
+                                    Text("\(item.ability?.name ?? "")")
+                                        .font(.body)
+                                        .fontWeight(.regular)
+                                }
+                            }
+                            .frame(width: UIScreen.main.bounds.width)
                         }
                         
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Seed")
+                        if self.pokemon?.moves != nil {
+                            Text("Moves")
                                 .font(.body)
-                                .fontWeight(.regular)
+                                .fontWeight(.bold)
                             
-                            Text("2’3’6 (0.70 cm)")
-                                .font(.body)
-                                .fontWeight(.regular)
-                            
-                            Text("15.2 lbs (6.9 kg)")
-                                .font(.body)
-                                .fontWeight(.regular)
-                            
-                            Text("Overgrow, Chlorophyl")
-                                .font(.body)
-                                .fontWeight(.regular)
-                            
-                            Text("Monster")
-                                .font(.body)
-                                .fontWeight(.regular)
-                            
-                            Text("Grass")
-                                .font(.body)
-                                .fontWeight(.regular)
+                            HStack {
+                                ForEach(self.pokemon!.moves!, id: \.self) { item in
+                                    Text("\(item.move?.name ?? "")")
+                                        .font(.body)
+                                        .fontWeight(.regular)
+                                }
+                            }
+                            .frame(width: UIScreen.main.bounds.width)
                         }
-                        .padding(.leading, 30)
                     }
                     .padding(.top, 20)
-                    .font(.custom("Gilroy-Bold", size: 18))
                     
                     Spacer()
                 }
@@ -176,6 +222,7 @@ struct InfoCard: View {
 }
 
 struct RoundedCorners: View {
+    
     var color: Color = .blue
     var tl: CGFloat = 0.0
     var tr: CGFloat = 0.0
@@ -205,43 +252,6 @@ struct RoundedCorners: View {
                 path.addArc(center: CGPoint(x: tl, y: tl), radius: tl, startAngle: Angle(degrees: 180), endAngle: Angle(degrees: 270), clockwise: false)
             }
             .fill(self.color)
-        }
-    }
-}
-
-
-struct InfPokemon: View {
-    
-    var body: some View {
-        
-        HStack {
-            ZStack {
-                VStack(alignment: .leading) {
-                    Text("Name")
-                        .font(.title)
-                        .fontWeight(.bold)
-                    
-                    HStack(spacing: 0) {
-                        Text("Types")
-                            .font(.body)
-                            .fontWeight(.regular)
-                        
-                        Spacer()
-                        
-                        Text("0033")
-                            .font(.body)
-                            .fontWeight(.regular)
-                    }
-                    .padding(.trailing, 10)
-                    .padding(.top, 10)
-                }
-                .padding(.leading, 30)
-                .foregroundColor(.white)
-            }
-            .frame(width: 226, height: 92)
-            .background(RoundedCorners(color:Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2006193249)),tl: 0, tr: 20, bl: 0, br: 20).opacity(0.5))
-            
-            Spacer()
         }
     }
 }

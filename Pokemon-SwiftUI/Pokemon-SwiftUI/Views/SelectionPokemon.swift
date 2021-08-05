@@ -11,6 +11,9 @@ import SDWebImageSwiftUI
 struct SelectionPokemon: View {
     
     @ObservedObject var viewModel = PokemonCardViewModel()
+        
+    @State var activePokemon: Pokemon?
+    @State var cardIsActive = false
     
     var body: some View {
         
@@ -53,20 +56,29 @@ struct SelectionPokemon: View {
                 
                 Spacer()
                 
-                ZStack {
-                    if self.viewModel.pokemonInfo.count > 0 {
+                if self.viewModel.pokemonInfo.count > 0 {
+                    ZStack {
                         ForEach(Array(self.viewModel.pokemonInfo.enumerated()), id: \.element) { i, element in
-                            //NavigationLink(destination: CardPokemon()) {
-                                Card(pokemon: element)
-                                    .offset(x: self.viewModel.x[i])
-                                    .rotationEffect(.init(degrees: self.viewModel.degree[i]))
-                                    .gesture(DragGesture().onChanged({ (value) in
-                                        self.viewModel.discardGesture(value: value, index: i)
-                                    })
-                                    .onEnded({ (value) in
-                                        self.viewModel.dragEnded(value: value, index: i)
-                                    }))
-                            //}
+                            Card(pokemon: element)
+                                .frame(height: UIScreen.main.bounds.height * 0.6)
+                                .offset(x: self.viewModel.x[i])
+                                .rotationEffect(.init(degrees: self.viewModel.degree[i]))
+                                .gesture(DragGesture().onChanged({ (value) in
+                                    self.viewModel.discardGesture(value: value, index: i)
+                                })
+                                .onEnded({ (value) in
+                                    self.viewModel.dragEnded(value: value, index: i)
+                                }))
+                                .onTapGesture {
+                                    self.activePokemon = element
+                                    self.cardIsActive = true
+                                }
+                            
+                            if activePokemon != nil {
+                                NavigationLink(destination: CardPokemon(pokemon: self.$viewModel.pokemonInfo[self.viewModel.position]),
+                                               isActive: self.$cardIsActive,
+                                               label: EmptyView.init)
+                            }
                         }
                         .padding(.horizontal, 30)
                         .animation(.default)
@@ -105,7 +117,9 @@ struct SelectionPokemon: View {
         .foregroundColor(Color("707070"))
         .navigationBarHidden(true)
         .onAppear {
-            self.viewModel.getPokemonList()
+            if self.viewModel.pokemonInfo.count == 0 {
+                self.viewModel.getPokemonList()
+            }
         }
     }
 }
@@ -164,7 +178,6 @@ struct Card : View {
                 .padding(.leading, 40)
                 .padding(.bottom, 30)
             }
-            .frame(height: UIScreen.main.bounds.height * 0.6)
         }
     }
 }

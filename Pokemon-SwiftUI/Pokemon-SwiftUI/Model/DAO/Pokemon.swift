@@ -57,7 +57,7 @@ struct Pokemon: Identifiable, Decodable, Encodable, Hashable, Equatable {
 }
 
 // MARK: - Ability
-struct Ability: Decodable, Encodable {
+struct Ability: Decodable, Encodable, Hashable, Equatable {
     let ability: Species?
     let isHidden: Bool?
     let slot: Int?
@@ -104,7 +104,7 @@ struct GameIndex: Decodable, Encodable {
 }
 
 // MARK: - Move
-struct Move: Decodable, Encodable {
+struct Move: Decodable, Encodable, Hashable, Equatable {
     let move: Species?
     let versionGroupDetails: [VersionGroupDetail]?
     
@@ -112,12 +112,26 @@ struct Move: Decodable, Encodable {
         case move
         case versionGroupDetails
     }
+    
+    static func == (lhs: Move, rhs: Move) -> Bool {
+        return lhs.move == rhs.move
+    }
 }
 
 // MARK: - VersionGroupDetail
-struct VersionGroupDetail: Decodable, Encodable {
+struct VersionGroupDetail: Decodable, Encodable, Hashable, Equatable {
     let levelLearnedAt: Int?
     let moveLearnMethod, versionGroup: Species?
+    
+    enum CodingKeys: String, CodingKey {
+        case levelLearnedAt
+        case moveLearnMethod
+        case versionGroup
+    }
+    
+    static func == (lhs: VersionGroupDetail, rhs: VersionGroupDetail) -> Bool {
+        return lhs.levelLearnedAt == rhs.levelLearnedAt
+    }
 }
 
 // MARK: - GenerationV
