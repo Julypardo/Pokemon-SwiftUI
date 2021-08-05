@@ -23,10 +23,10 @@ struct SelectionPokemon: View {
                 .edgesIgnoringSafeArea(.all)
            
             VStack{
-                
-                ZStack{
+                ZStack {
                     HStack {
                         Spacer()
+                        
                         Text("Pokedex")
                             .font(.title)
                             .foregroundColor(Color("707070"))
@@ -43,6 +43,7 @@ struct SelectionPokemon: View {
                             .aspectRatio(contentMode: .fill)
                             .clipShape(Circle())
                             .frame(width: 50, height: 50)
+                        
                         Spacer()
                         
                         NavigationLink(destination: ListPokemon()){
@@ -58,52 +59,40 @@ struct SelectionPokemon: View {
                 
                 ZStack {
                     ForEach(0..<7,id: \.self) { i in
-                        
-                        NavigationLink(destination: CardPokemon()){
-                            
+                        NavigationLink(destination: CardPokemon()) {
                             Card()
-                                
-                                .onAppear{
-                                    print(i)
-                                }
                                 .offset(x: self.x[i])
                                 .rotationEffect(.init(degrees: self.degree[i]))
-                                .gesture(DragGesture()
-                                            .onChanged({ (value) in
-                                                
-                                                if value.translation.width > 0{
-                                                    self.x[i] = value.translation.width
-                                                    self.degree[i] = 8
-                                                }
-                                                else {
-                                                    self.x[i] = value.translation.width
-                                                    self.degree[i] = -8
-                                                }
-                                            })
-                                            .onEnded({ (value) in
-                                                
-                                                if value.translation.width > 0{
-                                                    
-                                                    if value.translation.width > 100 {
-                                                        self.x[i] = 500
-                                                        self.degree[i] = 15
-                                                    }
-                                                    else{
-                                                        self.x[i] = 0
-                                                        self.degree[i] = 0
-                                                    }
-                                                }
-                                                else {
-                                                    if value.translation.width < -100 {
-                                                        self.x[i] = -500
-                                                        self.degree[i] = -15
-                                                    }
-                                                    else{
-                                                        self.x[i] = 0
-                                                        self.degree[i] = 0
-                                                    }
-                                                }
-                                            }))
+                                .gesture(DragGesture().onChanged({ (value) in
+                                    if value.translation.width > 0{
+                                        self.x[i] = value.translation.width
+                                        self.degree[i] = 8
+                                    } else {
+                                        self.x[i] = value.translation.width
+                                        self.degree[i] = -8
+                                    }
+                                })
+                                .onEnded({ (value) in
+                                    if value.translation.width > 0 {
+                                        if value.translation.width > 100 {
+                                            self.x[i] = 500
+                                            self.degree[i] = 15
+                                            self.position = position - 1
+                                        } else {
+                                            self.x[i] = 0
+                                            self.degree[i] = 0
+                                        }
+                                    } else {
+                                        if value.translation.width < -100 {
+                                            self.x[i] = -500
+                                            self.degree[i] = -15
+                                            self.position = position - 1
+                                        } else {
+                                            self.x[i] = 0
+                                            self.degree[i] = 0
+                                        }
+                                    }
+                                }))
                         }
                     }
                     .padding(.horizontal, 30)
@@ -112,8 +101,7 @@ struct SelectionPokemon: View {
                 
                 Spacer()
                 
-                HStack(spacing: 40){
-                    
+                HStack(spacing: 40) {
                     Button(action: {
                         if self.position >= 0 {
                             self.x[position] = -500
@@ -160,9 +148,10 @@ struct PokemonSelection_Previews: PreviewProvider {
 }
 
 struct Card : View {
+    
     var body :  some View {
         
-        ZStack{
+        ZStack {
             LinearGradient(gradient: Gradient(colors: [Color("7CB8DE"), Color(#colorLiteral(red: 0.9386602009, green: 0.9555124231, blue: 0.9482963104, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .frame(height: UIScreen.main.bounds.height * 0.6)
                 .cornerRadius(20)

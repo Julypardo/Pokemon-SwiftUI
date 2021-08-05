@@ -43,6 +43,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		421309BD26BB765800078A00 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AB3B47D726B8D04B00763DDC /* CardPokemon.swift */,
+				AB30A2AA26B99FD200D65689 /* ListPokemon.swift */,
+				AB30A2AC26B9BE1D00D65689 /* SelectionPokemon.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		AB3B47B526B8CEC900763DDC = {
 			isa = PBXGroup;
 			children = (
@@ -62,12 +72,10 @@
 		AB3B47C026B8CEC900763DDC /* Pokemon-SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				421309BD26BB765800078A00 /* Views */,
 				AB3B47C126B8CEC900763DDC /* AppDelegate.swift */,
 				AB3B47C326B8CEC900763DDC /* SceneDelegate.swift */,
 				AB3B47C526B8CEC900763DDC /* ContentView.swift */,
-				AB30A2AC26B9BE1D00D65689 /* SelectionPokemon.swift */,
-				AB30A2AA26B99FD200D65689 /* ListPokemon.swift */,
-				AB3B47D726B8D04B00763DDC /* CardPokemon.swift */,
 				AB9CB29626BB2205001467F7 /* Assets.xcassets */,
 				AB3B47CC26B8CECD00763DDC /* LaunchScreen.storyboard */,
 				AB3B47CF26B8CECD00763DDC /* Info.plist */,
