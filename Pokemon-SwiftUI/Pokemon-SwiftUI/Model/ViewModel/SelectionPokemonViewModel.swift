@@ -56,16 +56,22 @@ class PokemonCardViewModel: ObservableObject {
         if self.position >= 0 {
             self.x[self.position] = -500
             self.degree[self.position] = -15
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.pokemonInfo.remove(at: self.position)
+                self.position = self.position - 1
+            }
         }
-        self.position = self.position - 1
     }
     
     func catchPokemon() {
         if self.position >= 0 {
             self.x[self.position] = 500
             self.degree[self.position] = 15
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.pokemonInfo.remove(at: self.position)
+                self.position = self.position - 1
+            }
         }
-        self.position = self.position - 1
     }
     
     func discardGesture(value: DragGesture.Value, index: Int) {

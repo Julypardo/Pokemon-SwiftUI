@@ -114,7 +114,7 @@ struct List: View {
                 }
             }
             
-            NavigationLink(destination: CardPokemon(),
+            NavigationLink(destination: CardPokemon(pokemon: .constant(nil)),
                            tag: index,
                            selection: self.$selection,
                            label: EmptyView.init)
