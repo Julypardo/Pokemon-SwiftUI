@@ -20,7 +20,7 @@ struct CardPokemon: View {
     var body: some View {
         
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color("7CB8DE"), Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)), Color(#colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 0.8105205005)), Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
@@ -133,7 +133,7 @@ struct InfoCard: View {
                         .padding(20)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(RoundedCorners(color:Color("F2F8FF"),tl: 30, tr: 30, bl: 0, br: 0))
+                .background(RoundedCorners(color: Color(#colorLiteral(red: 0.9019607843, green: 0.9568627451, blue: 0.9725490196, alpha: 1)),tl: 30, tr: 30, bl: 0, br: 0))
                 .offset(x: 0, y: 130)
                 
                 WebImage(url: URL(string: self.pokemon?.sprites?.other?.officialArtwork?.frontDefault ?? self.pokemonCatch?.image ?? ""))
@@ -150,70 +150,87 @@ struct InfoCard: View {
                         .fontWeight(.bold)
                     
                     Divider()
-                        .frame(width: 285, height: 2)
-                        .background(Color("1791E7"))
+                        .frame(width: 285, height: 1)
+                        .background(Color(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)))
                     
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Species")
-                            .font(.body)
-                            .fontWeight(.bold)
+                        HStack{
+                            Text("Species")
+                                .font(.system(size: 18, weight: .medium, design: .default))
+                                .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
+                            Text("\(self.pokemon?.species?.name ?? self.pokemonCatch?.species ?? "")")
+                                .font(.system(size: 18, weight: .regular, design: .default))
+                               // .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
+                                .padding(.leading, 9)
+                        }
                         
-                        Text("\(self.pokemon?.species?.name ?? self.pokemonCatch?.species ?? "")")
-                            .font(.body)
-                            .fontWeight(.regular)
-                        
+                        HStack{
                         Text("Height")
-                            .font(.body)
-                            .fontWeight(.bold)
-                        
+                            .font(.system(size: 18, weight: .medium, design: .default))
+                            .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
                         Text("\((self.pokemon?.height ?? self.pokemonCatch?.height ?? 0 / 10)) Meters")
-                            .font(.body)
-                            .fontWeight(.regular)
+                            .font(.system(size: 18, weight: .regular, design: .default))
+                           // .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
+                            .padding(.leading, 18)
+                    }
                         
+                        HStack{
                         Text("Weight")
-                            .font(.body)
-                            .fontWeight(.bold)
-                        
+                            .font(.system(size: 18, weight: .medium, design: .default))
+                            .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
                         Text("\((self.pokemon?.weight ?? self.pokemonCatch?.weight ?? 0 / 10)) Kilograms")
-                            .font(.body)
-                            .fontWeight(.regular)
+                            .font(.system(size: 18, weight: .regular, design: .default))
+                            //.foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
+                            .padding(.leading, 16)
+                    }
+                        Divider()
+                            .frame(width: 285, height: 1)
+                            .background(Color(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)))
+                            .padding(.vertical, 15)
                         
                         Text("Abilities")
-                            .font(.body)
-                            .fontWeight(.bold)
+                            .font(.system(size: 18, weight: .medium, design: .default))
+                            .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
                         
                         if self.pokemon?.abilities != nil {
                             HStack {
                                 ForEach(self.pokemon!.abilities!, id: \.self) { item in
                                     Text("\(item.ability?.name ?? "")")
-                                        .font(.body)
-                                        .fontWeight(.regular)
+                                        .font(.system(size: 18, weight: .regular, design: .default))
+                                      //  .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
                                 }
                             }
-                            .frame(width: UIScreen.main.bounds.width)
+                            .frame(width: UIScreen.main.bounds.width, alignment: .leading)
                         } else {
                             Text("\(self.pokemonCatch?.abilities ?? "")")
-                                .font(.body)
-                                .fontWeight(.regular)
+                                .font(.system(size: 18, weight: .regular, design: .default))
+                               // .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
                         }
                         
                         Text("Moves")
-                            .font(.body)
-                            .fontWeight(.bold)
-                        
+                            .font(.system(size: 18, weight: .medium, design: .default))
+                            .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
                         if self.pokemon?.moves != nil {
-                            HStack {
-                                ForEach(self.pokemon!.moves!, id: \.self) { item in
-                                    Text("\(item.move?.name ?? "")")
-                                        .font(.body)
-                                        .fontWeight(.regular)
+                            VStack(alignment: .leading){
+                                if self.pokemon!.moves!.count > 9 {
+                                    ForEach(0..<10, id: \.self) { item in
+                                        Text("\(self.pokemon!.moves![item].move?.name ?? "")")
+                                            .font(.system(size: 18, weight: .regular, design: .default))
+                                          //  .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
+                                    }
+                                } else {
+                                    ForEach(0..<self.pokemon!.moves!.count, id: \.self) { item in
+                                        Text("\(self.pokemon!.moves![item].move?.name ?? "")")
+                                            .font(.system(size: 18, weight: .regular, design: .default))
+                                           // .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
+                                    }
                                 }
                             }
-                            .frame(width: UIScreen.main.bounds.width)
+                            .frame(width: UIScreen.main.bounds.width, alignment: .leading)
                         } else {
                             Text("\(self.pokemonCatch?.moves ?? "")")
-                                .font(.body)
-                                .fontWeight(.regular)
+                                .font(.system(size: 18, weight: .regular, design: .default))
+                               // .foregroundColor(Color(#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)))
                         }
                     }
                     .padding(.top, 20)
@@ -221,11 +238,11 @@ struct InfoCard: View {
                     Spacer()
                 }
                 .foregroundColor(Color("707070"))
-                .padding(.leading, 20)
+                .padding(.leading, 30)
                 .padding(.top, 10)
                 .padding(.bottom)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(RoundedCorners(color: Color("F2F8FF"), tl: 0, tr: 0, bl: 30, br: 0))
+                .background(RoundedCorners(color: Color(#colorLiteral(red: 0.9019607843, green: 0.9568627451, blue: 0.9725490196, alpha: 1)), tl: 0, tr: 0, bl: 60, br: 0))
                 .edgesIgnoringSafeArea(.all)
                 .padding(.top, -5)
             }
