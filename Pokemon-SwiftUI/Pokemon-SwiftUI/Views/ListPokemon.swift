@@ -82,20 +82,19 @@ struct CardCatchPokemon: View {
         
         VStack(spacing: 0) {
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color.white, Color("C1F1FF")]), startPoint: .topLeading, endPoint: .bottomTrailing)
+               // LinearGradient(gradient: Gradient(colors: [Color.white, Color("C1F1FF")]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 0.8204735762)), Color(#colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 0.8105205005)), Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 10) {
                         Text(self.pokemon.name.capitalizingFirstLetter())
-                            .font(.title)
-                            .foregroundColor(Color("707070"))
-                            .fontWeight(.bold)
-                        
+                            .font(.system(size: 25, weight: .bold, design: .default))
+                            .foregroundColor(Color.white)
+                            
                         Text(self.pokemon.types)
-                            .font(.body)
-                            .foregroundColor(Color("707070"))
-                            .fontWeight(.bold)
+                            .font(.system(size: 18, weight: .medium, design: .default))
+                            .foregroundColor(Color.white)
                     }
                     
                     Spacer()
