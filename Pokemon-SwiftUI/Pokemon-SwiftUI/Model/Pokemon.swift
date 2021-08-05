@@ -75,6 +75,8 @@ struct Ability: Decodable, Encodable, Hashable, Equatable {
 
 // MARK: - Species
 struct Species: Decodable, Encodable, Hashable, Equatable {
+    
+    private(set) var id = UUID()
     let name: String?
     let url: String?
     

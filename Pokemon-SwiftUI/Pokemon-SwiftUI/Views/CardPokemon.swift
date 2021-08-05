@@ -13,6 +13,7 @@ struct CardPokemon: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @Binding var pokemon: Pokemon?
+    @Binding var pokemonCatch: CatchPokemon?
     
     @State var likeHeart: Bool = true
     
@@ -48,7 +49,7 @@ struct CardPokemon: View {
                 .padding(.all, 30)
                 
                 ScrollView(showsIndicators: false) {
-                    InfoCard(pokemon: self.$pokemon)
+                    InfoCard(pokemon: self.$pokemon, pokemonCatch: self.$pokemonCatch)
                 }
             }
         }
@@ -59,7 +60,7 @@ struct CardPokemon: View {
 struct CardPokemon_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CardPokemon(pokemon: .constant(nil))
+            CardPokemon(pokemon: .constant(nil), pokemonCatch: .constant(nil))
         }
     }
 }
@@ -67,13 +68,14 @@ struct CardPokemon_Previews: PreviewProvider {
 struct InfPokemon: View {
     
     @Binding var pokemon: Pokemon?
+    @Binding var pokemonCatch: CatchPokemon?
     
     var body: some View {
         
         HStack {
             ZStack {
                 VStack(alignment: .leading) {
-                    Text("\(self.pokemon?.name ?? "")")
+                    Text("\(self.pokemon?.name ?? self.pokemonCatch?.name ?? "")")
                         .font(.title)
                         .fontWeight(.bold)
                     
@@ -86,11 +88,15 @@ struct InfPokemon: View {
                                         .fontWeight(.regular)
                                 }
                             }
+                        } else {
+                            Text("\(self.pokemonCatch?.types ?? "")")
+                                .font(.body)
+                                .fontWeight(.regular)
                         }
                         
                         Spacer()
                         
-                        Text("#\(self.pokemon?.id ?? 0)")
+                        Text("#\(self.pokemon?.id ?? self.pokemonCatch?.id ?? 0)")
                             .font(.body)
                             .fontWeight(.regular)
                     }
@@ -112,11 +118,12 @@ struct InfPokemon: View {
 struct InfoCard: View {
     
     @Binding var pokemon: Pokemon?
+    @Binding var pokemonCatch: CatchPokemon?
     
     var body: some View {
         
         VStack(spacing: 0) {
-            InfPokemon(pokemon: self.$pokemon)
+            InfPokemon(pokemon: self.$pokemon, pokemonCatch: self.$pokemonCatch)
             
             Spacer()
             
@@ -129,7 +136,7 @@ struct InfoCard: View {
                 .background(RoundedCorners(color:Color("F2F8FF"),tl: 30, tr: 30, bl: 0, br: 0))
                 .offset(x: 0, y: 130)
                 
-                WebImage(url: URL(string: self.pokemon?.sprites?.other?.officialArtwork?.frontDefault ?? ""))
+                WebImage(url: URL(string: self.pokemon?.sprites?.other?.officialArtwork?.frontDefault ?? self.pokemonCatch?.image ?? ""))
                     .resizable()
                     .renderingMode(.original)
                     .aspectRatio(contentMode: .fill)
@@ -151,7 +158,7 @@ struct InfoCard: View {
                             .font(.body)
                             .fontWeight(.bold)
                         
-                        Text("\(self.pokemon?.species?.name ?? "")")
+                        Text("\(self.pokemon?.species?.name ?? self.pokemonCatch?.species ?? "")")
                             .font(.body)
                             .fontWeight(.regular)
                         
@@ -159,7 +166,7 @@ struct InfoCard: View {
                             .font(.body)
                             .fontWeight(.bold)
                         
-                        Text("\((self.pokemon?.height ?? 0 / 10)) Meters")
+                        Text("\((self.pokemon?.height ?? self.pokemonCatch?.height ?? 0 / 10)) Meters")
                             .font(.body)
                             .fontWeight(.regular)
                         
@@ -167,15 +174,15 @@ struct InfoCard: View {
                             .font(.body)
                             .fontWeight(.bold)
                         
-                        Text("\((self.pokemon?.weight  ?? 0 / 10)) Kilograms")
+                        Text("\((self.pokemon?.weight ?? self.pokemonCatch?.weight ?? 0 / 10)) Kilograms")
                             .font(.body)
                             .fontWeight(.regular)
                         
+                        Text("Abilities")
+                            .font(.body)
+                            .fontWeight(.bold)
+                        
                         if self.pokemon?.abilities != nil {
-                            Text("Abilities")
-                                .font(.body)
-                                .fontWeight(.bold)
-                            
                             HStack {
                                 ForEach(self.pokemon!.abilities!, id: \.self) { item in
                                     Text("\(item.ability?.name ?? "")")
@@ -184,13 +191,17 @@ struct InfoCard: View {
                                 }
                             }
                             .frame(width: UIScreen.main.bounds.width)
+                        } else {
+                            Text("\(self.pokemonCatch?.abilities ?? "")")
+                                .font(.body)
+                                .fontWeight(.regular)
                         }
                         
+                        Text("Moves")
+                            .font(.body)
+                            .fontWeight(.bold)
+                        
                         if self.pokemon?.moves != nil {
-                            Text("Moves")
-                                .font(.body)
-                                .fontWeight(.bold)
-                            
                             HStack {
                                 ForEach(self.pokemon!.moves!, id: \.self) { item in
                                     Text("\(item.move?.name ?? "")")
@@ -199,6 +210,10 @@ struct InfoCard: View {
                                 }
                             }
                             .frame(width: UIScreen.main.bounds.width)
+                        } else {
+                            Text("\(self.pokemonCatch?.moves ?? "")")
+                                .font(.body)
+                                .fontWeight(.regular)
                         }
                     }
                     .padding(.top, 20)

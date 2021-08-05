@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
 class PokemonCardViewModel: ObservableObject {
     
@@ -67,6 +68,9 @@ class PokemonCardViewModel: ObservableObject {
         if self.position >= 0 {
             self.x[self.position] = 500
             self.degree[self.position] = 15
+            
+            self.savePokemon()
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 self.pokemonInfo.remove(at: self.position)
                 self.position = self.position - 1
@@ -103,5 +107,43 @@ class PokemonCardViewModel: ObservableObject {
     func revertPosition(index: Int) {
         self.x[index] = 0
         self.degree[index] = 0
+    }
+    
+    
+    func savePokemon() {
+        let pokemon = PokemonDAO(context: CoreDataManager.shared.persistenceContainer.viewContext)
+        pokemon.id = Int16(self.pokemonInfo[self.position]?.id ?? 0)
+        pokemon.name = self.pokemonInfo[self.position]?.name ?? ""
+        
+        var typesConcat: String = ""
+        if self.pokemonInfo[self.position]?.types != nil {
+            for item in self.pokemonInfo[self.position]!.types! {
+                typesConcat = typesConcat + (item.type?.name ?? "") + " "
+            }
+        }
+        pokemon.types = typesConcat
+        
+        pokemon.image = self.pokemonInfo[self.position]?.sprites?.other?.officialArtwork?.frontDefault ?? ""
+        pokemon.species = self.pokemonInfo[self.position]?.species?.name ?? ""
+        pokemon.height = Int16(self.pokemonInfo[self.position]?.height ?? 0)
+        pokemon.weight = Int16(self.pokemonInfo[self.position]?.weight ?? 0)
+        
+        var abilitiesConcat: String = ""
+        if self.pokemonInfo[self.position]?.abilities != nil {
+            for item in self.pokemonInfo[self.position]!.abilities! {
+                abilitiesConcat = abilitiesConcat + (item.ability?.name ?? "") + " "
+            }
+        }
+        pokemon.abilities = abilitiesConcat
+        
+        var movesConcat: String = ""
+        if self.pokemonInfo[self.position]?.moves != nil {
+            for item in self.pokemonInfo[self.position]!.moves! {
+                movesConcat = movesConcat + (item.move?.name ?? "") + " "
+            }
+        }
+        pokemon.moves = movesConcat
+        
+        CoreDataManager.shared.save()
     }
 }

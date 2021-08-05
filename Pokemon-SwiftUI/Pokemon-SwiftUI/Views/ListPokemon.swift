@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ListPokemon: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    @ObservedObject var viewModel = ListPokemonViewModel()
     
     var body: some View {
         
@@ -37,16 +40,27 @@ struct ListPokemon: View {
                     .fontWeight(.bold)
                     .padding(.top, 40)
                 
-                ScrollView(showsIndicators: false) {
-                    List()
-                        .padding(.bottom, 50)
+                
+                if #available(iOS 14.0, *) {
+                    ScrollView(showsIndicators: false) {
+                        LazyVStack {
+                            ListCatchPokemon(viewModel: self.viewModel)
+                        }
+                    }
+                    .padding(.top, 20)
+                } else {
+                    // Fallback on earlier versions
                 }
-                .padding(.top, 20)
             }
             .padding(.horizontal, 30)
         }
         .foregroundColor(Color("707070"))
         .navigationBarHidden(true)
+        .onAppear {
+            if self.viewModel.pokemons.isEmpty {
+                self.viewModel.getCaughtPokemons()
+            }
+        }
     }
 }
 
@@ -56,68 +70,60 @@ struct ListPokemon_Previews: PreviewProvider {
     }
 }
 
-struct Item: Identifiable {
-    var id = UUID()
-    var name: String
-    var types: String
-    var imagePokemon: String
-}
-
-struct List: View {
+struct ListCatchPokemon: View {
     
-    let data: [Item] = [
-        Item(name: "Name", types: "Types", imagePokemon: "pokemon4"),
-        Item(name: "Name", types: "Types", imagePokemon: "pokemon3"),
-        Item( name: "Name", types: "Types", imagePokemon: "pokemon2"),
-        Item( name: "Name", types: "Types", imagePokemon: "pokemon1")
-    ]
+    @ObservedObject var viewModel: ListPokemonViewModel
     
-    @State var selection: Int?
+    @State var activePokemon: CatchPokemon?
+    @State var cardIsActive = false
     
     var body: some View {
         
-        ForEach (0..<self.data.count, id: \.self) { index in
-            Button(action: {
-                self.selection = index
-            }) {
-                VStack(spacing: 0) {
-                    ZStack {
-                        LinearGradient(gradient: Gradient(colors: [Color.white, Color("C1F1FF")]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                            .edgesIgnoringSafeArea(.all)
-                        
-                        HStack {
-                            VStack(alignment: .leading, spacing: 10) {
-                                Text(self.data[index].name)
-                                    .font(.title)
-                                    .foregroundColor(Color("707070"))
-                                    .fontWeight(.bold)
-                                Text(self.data[index].types)
-                                    .font(.body)
-                                    .foregroundColor(Color("707070"))
-                                    .fontWeight(.bold)
-                            }
+        ForEach(Array(self.viewModel.pokemons.enumerated()), id: \.element) { index, element in
+            VStack(spacing: 0) {
+                ZStack {
+                    LinearGradient(gradient: Gradient(colors: [Color.white, Color("C1F1FF")]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    HStack {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(element.name.capitalizingFirstLetter())
+                                .font(.title)
+                                .foregroundColor(Color("707070"))
+                                .fontWeight(.bold)
                             
-                            Spacer()
-                            
-                            Image(self.data[index].imagePokemon)
-                                .resizable()
-                                .renderingMode(.original)
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 133, height: 133)
+                            Text(element.types)
+                                .font(.body)
+                                .foregroundColor(Color("707070"))
+                                .fontWeight(.bold)
                         }
-                        .padding(.horizontal, 10)
+                        
+                        Spacer()
+                        
+                        WebImage(url: URL(string: element.image))
+                            .resizable()
+                            .renderingMode(.original)
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 133, height: 133)
                     }
-                    .cornerRadius(20)
-                    .frame(height: 150)
-                    .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.07)), radius: 5)
-                    .padding(5)
+                    .padding(.horizontal, 10)
                 }
+                .cornerRadius(20)
+                .frame(height: 150)
+                .shadow(color: Color(#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.07)), radius: 5)
+                .padding(5)
+            }
+            .onTapGesture {
+                self.activePokemon = element
+                self.cardIsActive = true
             }
             
-            NavigationLink(destination: CardPokemon(pokemon: .constant(nil)),
-                           tag: index,
-                           selection: self.$selection,
-                           label: EmptyView.init)
+            if self.activePokemon != nil {
+                NavigationLink(destination: CardPokemon(pokemon: .constant(nil),
+                                                        pokemonCatch: .constant(element)),
+                               isActive: self.$cardIsActive,
+                               label: EmptyView.init)
+            }
         }
     }
 }

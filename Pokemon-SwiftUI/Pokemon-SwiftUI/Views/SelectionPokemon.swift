@@ -75,7 +75,8 @@ struct SelectionPokemon: View {
                                 }
                             
                             if activePokemon != nil {
-                                NavigationLink(destination: CardPokemon(pokemon: self.$viewModel.pokemonInfo[self.viewModel.position]),
+                                NavigationLink(destination: CardPokemon(pokemon: self.$viewModel.pokemonInfo[self.viewModel.position],
+                                                                        pokemonCatch: .constant(nil)),
                                                isActive: self.$cardIsActive,
                                                label: EmptyView.init)
                             }
