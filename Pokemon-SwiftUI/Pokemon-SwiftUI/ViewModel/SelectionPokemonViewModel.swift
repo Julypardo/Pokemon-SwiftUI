@@ -25,7 +25,7 @@ class PokemonCardViewModel: ObservableObject {
     
     // MARK: Private values
     private var limit: Int = 10
-    private var offset: Int = 0
+    private var offset: Int = UserDefaults.standard.integer(forKey: "offset")
     
     
     func getPokemonList() {
@@ -40,6 +40,7 @@ class PokemonCardViewModel: ObservableObject {
         }
         
         self.offset = self.offset + self.limit
+        UserDefaults.standard.set(self.offset, forKey: "offset")
     }
     
     func getPokemonInfo(url: String) {
