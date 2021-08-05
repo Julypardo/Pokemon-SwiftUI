@@ -12,7 +12,9 @@ struct ListPokemon: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
+    
     @ObservedObject var viewModel = ListPokemonViewModel()
+    @State private var tappedItem: CatchPokemon?
     
     var body: some View {
         
@@ -53,7 +55,30 @@ struct ListPokemon: View {
                     }
                     .padding(.top, 20)
                 } else {
-                    // Fallback on earlier versions
+                    List{
+                        ForEach(self.viewModel.pokemons, id: \.id) { element in
+                          //  NavigationLink(destination: CardPokemon(pokemon: .constant(nil), pokemonCatch: .constant(element))) {
+                                CardCatchPokemon(pokemon: element)
+                                    .background(
+                                        NavigationLink(destination: CardPokemon(pokemon: .constant(nil), pokemonCatch: .constant(element)),
+                                                       isActive: Binding(
+                                            get: { self.tappedItem != nil },         // << handle !!
+                                            set: { _,_ in self.tappedItem = nil }
+                                                       )) {
+                                            EmptyView()
+                                        }
+                                    )
+                           // }
+                                   
+                        }
+                    }
+                    .padding(.top, 20)
+                    .onAppear() {
+                        UITableView.appearance().showsVerticalScrollIndicator = false
+                        UITableView.appearance().backgroundColor = UIColor.clear
+                        UITableViewCell.appearance().backgroundColor = UIColor.clear
+                        UITableView.appearance().separatorStyle = .none
+                    }
                 }
             }
             .padding(.horizontal, 30)
@@ -77,6 +102,9 @@ struct ListPokemon_Previews: PreviewProvider {
 struct CardCatchPokemon: View {
     
     var pokemon: CatchPokemon
+    var text: CGFloat = UIScreen.main.bounds.height <= 726 ? 18 : 25
+    var textBody: CGFloat = UIScreen.main.bounds.height <= 726 ? 12 : 18
+    var image: CGFloat = UIScreen.main.bounds.height <= 726 ? 90 : 133
     
     var body: some View {
         
@@ -89,11 +117,11 @@ struct CardCatchPokemon: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 10) {
                         Text(self.pokemon.name.capitalizingFirstLetter())
-                            .font(.system(size: 25, weight: .bold, design: .default))
+                            .font(.system(size: text, weight: .bold, design: .default))
                             .foregroundColor(Color.white)
                             
                         Text(self.pokemon.types)
-                            .font(.system(size: 18, weight: .medium, design: .default))
+                            .font(.system(size: textBody, weight: .medium, design: .default))
                             .foregroundColor(Color.white)
                     }
                     
@@ -103,7 +131,7 @@ struct CardCatchPokemon: View {
                         .resizable()
                         .renderingMode(.original)
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: 133, height: 133)
+                        .frame(width: image, height: image)
                 }
                 .padding(.horizontal, 10)
             }
