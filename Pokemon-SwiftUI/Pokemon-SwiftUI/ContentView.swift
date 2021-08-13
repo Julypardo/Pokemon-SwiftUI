@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     init() {
         UINavigationBar.appearance().isUserInteractionEnabled = false
         UINavigationBar.appearance().backgroundColor = .clear
@@ -17,9 +16,8 @@ struct ContentView: View {
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().tintColor = .clear
     }
-    
+
     var body: some View {
-        
         NavigationView {
             SelectionPokemon()
                 .navigationBarTitle("")
